@@ -1,0 +1,31 @@
+{
+  "name": "members-only",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/supreMe7492/members-only.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/supreMe7492/members-only/issues"
+  },
+  "homepage": "https://github.com/supreMe7492/members-only#readme",
+  "dependencies": {
+    "connect-pg-simple": "^10.0.0",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-validator": "^7.3.1",
+    "nodemon": "^3.1.11",
+    "pg": "^8.16.3"
+  }
+}
