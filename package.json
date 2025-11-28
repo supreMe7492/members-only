@@ -20,12 +20,16 @@
   },
   "homepage": "https://github.com/supreMe7492/members-only#readme",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "connect-pg-simple": "^10.0.0",
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
+    "express-session": "^1.18.2",
     "express-validator": "^7.3.1",
     "nodemon": "^3.1.11",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
     "pg": "^8.16.3"
   }
 }
