@@ -3,7 +3,11 @@ const bcrypt = require("bcryptjs");
 const pool = require("../db/pool");
 const signUp = Router();
 signUp.get("/", (req, res) => {
-  res.render("index");
+  if (req.isAuthenticated()) {
+    res.redirect("/posts");
+  } else {
+    res.render("index");
+  }
 });
 
 signUp.post("/", async (req, res) => {
