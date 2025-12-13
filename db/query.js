@@ -1,4 +1,5 @@
 const pool = require("../db/pool");
+
 async function addUser(email, password, firstname, lastname) {
   await pool.query("INSERT INTO users (email,password) VALUES ($1,$2)", [
     email,
@@ -14,4 +15,16 @@ async function addUser(email, password, firstname, lastname) {
   );
 }
 
-module.exports = { addUser };
+async function addPost(postText, u_id) {
+  await pool.query("INSERT INTO posts (postdetails) VALUES ($1)", [postText]);
+  const { rows } = await pool.query(
+    "SELECT * FROM posts WHERE postdetails = $1",
+    [postText],
+  );
+  const p_id = rows[0].p_id;
+  await pool.query("INSERT INTO user_post (u_id,p_id) VALUES($1,$2)", [
+    u_id,
+    p_id,
+  ]);
+}
+module.exports = { addUser, addPost };

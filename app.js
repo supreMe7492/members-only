@@ -80,9 +80,11 @@ function ensureAuthentication(req, res, next) {
 const login = require("./routes/login");
 app.use("/login", login);
 
-app.get("/posts", ensureAuthentication, (req, res) => {
-  res.send("logged in successfully");
-});
+const post = require("./routes/post");
+app.use("/posts", ensureAuthentication, post);
+
+const postForm = require("./routes/postform");
+app.use("/post_form", postForm);
 app.listen(3000, () => {
   console.log("hell yeah!");
 });
