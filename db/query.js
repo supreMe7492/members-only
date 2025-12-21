@@ -27,4 +27,9 @@ async function addPost(postText, u_id) {
     p_id,
   ]);
 }
-module.exports = { addUser, addPost };
+
+async function getPosts() {
+  const { rows } = await pool.query("SELECT * FROM posts");
+  return rows;
+}
+module.exports = { addUser, addPost, getPosts };
