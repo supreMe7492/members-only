@@ -17,6 +17,7 @@ app.use(
   session({
     store: new pgSession({
       pool: pool,
+      createTableIfMissing: true,
     }),
 
     secret: process.env.SESSION_SECRET,
@@ -25,51 +26,15 @@ app.use(
     cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
   }),
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
+
+const { usePassport } = require("./lib/authenticate");
+usePassport(passport);
 
 const signUp = require("./routes/signup");
 app.use("/", signUp);
 
-passport.use(
-  new LocalStrategy(async (username, password, done) => {
-    try {
-      const { rows } = await pool.query(
-        "SELECT * FROM users WHERE email = $1",
-        [username],
-      );
-      const user = rows[0];
-      if (!user) {
-        return done(null, false, { message: "user dont exist" });
-      }
-
-      const match = await bcrypt.compare(password, user.password);
-      if (!match) {
-        return done(null, false, { message: "incorrect password" });
-      }
-      return done(null, user);
-    } catch (err) {
-      done(err);
-    }
-  }),
-);
-
-passport.serializeUser((user, done) => {
-  done(null, user.u_id);
-});
-
-passport.deserializeUser(async (id, done) => {
-  try {
-    const { rows } = await pool.query("SELECT * FROM users WHERE u_id = $1", [
-      id,
-    ]);
-    const user = rows[0];
-    done(null, user);
-  } catch (err) {
-    done(err);
-  }
-});
 function ensureAuthentication(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
@@ -85,6 +50,15 @@ app.use("/posts", ensureAuthentication, post);
 
 const postForm = require("./routes/postform");
 app.use("/post_form", postForm);
+
+const member = require("./routes/member");
+app.use("/secretmember", member);
+
+app.use((err, req, res, next) => {
+  console.error("Something went wrong:", err);
+  res.status(500).send("Something broke on the server.");
+});
+
 app.listen(3000, () => {
   console.log("hell yeah!");
 });

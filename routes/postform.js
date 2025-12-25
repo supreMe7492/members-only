@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { postValidator, handleValidationError } = require("../lib/validator");
 const postForm = Router();
 const { userPost } = require("../contollers/postController");
 postForm.get("/", (req, res) => {
@@ -8,6 +9,6 @@ postForm.get("/", (req, res) => {
   res.render("postform");
 });
 
-postForm.post("/", userPost);
+postForm.post("/", postValidator, handleValidationError, userPost);
 
 module.exports = postForm;

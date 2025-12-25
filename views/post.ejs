@@ -8,8 +8,17 @@
   <button><a href="/post_form">post something</a></button>
   <div>
     <%for (let i = 0; i<posts.length; i++){%>
-    <div><%=posts[i].postdetails%></div>
+    <div>
+      <%=posts[i].postdetails%>
+      <% if (isMember){%>
+       <section><%= posts[i].created_at%></section>
+       <section><%= posts[i].firstname%></section>
+       <%}%>
+    </div>
     <%}%>
   </div>
+  <form method="post" action="/posts">
+    <button type="submit">logout</button>
+  </form>
 </body>
 </html>

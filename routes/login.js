@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { loginValidator, handleValidationError } = require("../lib/validator");
 const passport = require("passport");
 
 const login = Router();
@@ -8,6 +9,8 @@ login.get("/", (req, res) => {
 
 login.post(
   "/",
+  loginValidator,
+  handleValidationError,
   passport.authenticate("local", {
     successRedirect: "/posts",
     failureRedirect: "/",

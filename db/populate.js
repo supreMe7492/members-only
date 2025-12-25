@@ -27,7 +27,8 @@ const sql = `CREATE TABLE IF NOT EXISTS users(
              
             CREATE TABLE member(
               u_id INTEGER PRIMARY KEY,
-              member boolean DEFAULT FALSE
+              member boolean DEFAULT FALSE,
+              FOREIGN KEY (u_id) REFERENCES users(u_id) ON DELETE CASCADE
             );
 `;
 

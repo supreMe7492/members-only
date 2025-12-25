@@ -1,6 +1,11 @@
 const { Router } = require("express");
 const bcrypt = require("bcryptjs");
 const pool = require("../db/pool");
+const {
+  handleValidationError,
+  signUpValidator,
+  signupValidator,
+} = require("../lib/validator");
 const { signUser } = require("../contollers/userController");
 const signUp = Router();
 signUp.get("/", (req, res) => {
@@ -11,6 +16,6 @@ signUp.get("/", (req, res) => {
   }
 });
 
-signUp.post("/", signUser);
+signUp.post("/", signupValidator, handleValidationError, signUser);
 
 module.exports = signUp;
